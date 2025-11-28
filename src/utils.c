@@ -43,24 +43,34 @@ static int g_log_level = LOG_LEVEL_INFO;
 #define COLOR_BOLD_ORANGE "\033[1;38;5;208m"
 
 /**
- * Print the Project Overwatch banner
+ * Print the Project Overwatch banner with LGBTQ Pride colors
  */
 void print_banner(void) {
+    /* LGBTQ Pride Rainbow Colors */
+    const char *RED     = "\033[1;31m";
+    const char *ORANGE  = "\033[1;38;5;208m";
+    const char *YELLOW  = "\033[1;33m";
+    const char *GREEN   = "\033[1;32m";
+    const char *BLUE    = "\033[1;34m";
+    const char *PURPLE  = "\033[1;35m";
+    const char *RESET   = "\033[0m";
+    const char *WHITE   = "\033[1;37m";
+    const char *CYAN    = "\033[1;36m";
+    
     printf("\n");
-    printf("\033[1;34m");  /* Bold Blue border */
-    printf("╔══════════════════════════════════════════════════════════════════════╗\n");
-    printf("║\033[0m                                                                      \033[1;34m║\n");
-    printf("║\033[1;38;5;208m    ██████╗ ██╗   ██╗███████╗██████╗ ██╗    ██╗ █████╗ ████████╗ ██████╗██╗  ██╗  \033[1;34m║\n");
-    printf("║\033[1;38;5;208m   ██╔═══██╗██║   ██║██╔════╝██╔══██╗██║    ██║██╔══██╗╚══██╔══╝██╔════╝██║  ██║  \033[1;34m║\n");
-    printf("║\033[1;33m   ██║   ██║██║   ██║█████╗  ██████╔╝██║ █╗ ██║███████║   ██║   ██║     ███████║  \033[1;34m║\n");
-    printf("║\033[1;33m   ██║   ██║╚██╗ ██╔╝██╔══╝  ██╔══██╗██║███╗██║██╔══██║   ██║   ██║     ██╔══██║  \033[1;34m║\n");
-    printf("║\033[1;31m   ╚██████╔╝ ╚████╔╝ ███████╗██║  ██║╚███╔███╔╝██║  ██║   ██║   ╚██████╗██║  ██║  \033[1;34m║\n");
-    printf("║\033[1;31m    ╚═════╝   ╚═══╝  ╚══════╝╚═╝  ╚═╝ ╚══╝╚══╝ ╚═╝  ╚═╝   ╚═╝    ╚═════╝╚═╝  ╚═╝  \033[1;34m║\n");
-    printf("║\033[0m                                                                      \033[1;34m║\n");
-    printf("║\033[1;37m                   ⚡ PROJECT OVERWATCH ⚡  v%s                     \033[1;34m║\n", OVERWATCH_VERSION);
-    printf("║\033[0;36m                Linux Userspace EDR • Syscall Tracer                   \033[1;34m║\n");
-    printf("║\033[0m                                                                      \033[1;34m║\n");
-    printf("╚══════════════════════════════════════════════════════════════════════╝\033[0m\n");
+    printf("%s╔════════════════════════════════════════════════════════════════════════════════╗%s\n", PURPLE, RESET);
+    printf("%s║%s                                                                                %s║%s\n", PURPLE, RESET, PURPLE, RESET);
+    printf("%s║%s   ██████╗ ██╗   ██╗███████╗██████╗ ██╗    ██╗ █████╗ ████████╗ ██████╗██╗  ██╗ %s║%s\n", PURPLE, RED, PURPLE, RESET);
+    printf("%s║%s  ██╔═══██╗██║   ██║██╔════╝██╔══██╗██║    ██║██╔══██╗╚══██╔══╝██╔════╝██║  ██║ %s║%s\n", PURPLE, ORANGE, PURPLE, RESET);
+    printf("%s║%s  ██║   ██║██║   ██║█████╗  ██████╔╝██║ █╗ ██║███████║   ██║   ██║     ███████║ %s║%s\n", PURPLE, YELLOW, PURPLE, RESET);
+    printf("%s║%s  ██║   ██║╚██╗ ██╔╝██╔══╝  ██╔══██╗██║███╗██║██╔══██║   ██║   ██║     ██╔══██║ %s║%s\n", PURPLE, GREEN, PURPLE, RESET);
+    printf("%s║%s  ╚██████╔╝ ╚████╔╝ ███████╗██║  ██║╚███╔███╔╝██║  ██║   ██║   ╚██████╗██║  ██║ %s║%s\n", PURPLE, BLUE, PURPLE, RESET);
+    printf("%s║%s   ╚═════╝   ╚═══╝  ╚══════╝╚═╝  ╚═╝ ╚══╝╚══╝ ╚═╝  ╚═╝   ╚═╝    ╚═════╝╚═╝  ╚═╝ %s║%s\n", PURPLE, PURPLE, PURPLE, RESET);
+    printf("%s║%s                                                                                %s║%s\n", PURPLE, RESET, PURPLE, RESET);
+    printf("%s║%s                 PROJECT OVERWATCH      v%s                                  %s║%s\n", PURPLE, WHITE, OVERWATCH_VERSION, PURPLE, RESET);
+    printf("%s║%s             Linux Userspace EDR  •  Syscall Tracer                             %s║%s\n", PURPLE, CYAN, PURPLE, RESET);
+    printf("%s║%s                                                                                %s║%s\n", PURPLE, RESET, PURPLE, RESET);
+    printf("%s╚════════════════════════════════════════════════════════════════════════════════╝%s\n", PURPLE, RESET);
     printf("\n");
 }
 
