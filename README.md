@@ -1,8 +1,8 @@
-# Project Watchtower 🗼
+# Project Overwatch 🛡️
 
 ## Linux Userspace EDR (Endpoint Detection and Response)
 
-A comprehensive system call tracer and security monitor built using Linux's `ptrace` architecture. Project Watchtower intercepts, analyzes, and enforces security policies on running processes without requiring kernel modifications.
+A userspace system call tracer and security monitor built using Linux's `ptrace` architecture. Project Overwatch intercepts, analyzes, and enforces security policies on running processes without requiring kernel modifications. This is an educational implementation demonstrating ptrace-based syscall monitoring and heuristic enforcement.
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue)
 ![Platform](https://img.shields.io/badge/platform-Linux%20x86__64-green)
@@ -19,6 +19,7 @@ A comprehensive system call tracer and security monitor built using Linux's `ptr
 - [Building](#building)
 - [Usage](#usage)
 - [Detection Rules](#detection-rules)
+- [Known Limitations](#known-limitations)
 - [Technical Deep Dive](#technical-deep-dive)
 - [Project Structure](#project-structure)
 - [Testing](#testing)
@@ -28,14 +29,14 @@ A comprehensive system call tracer and security monitor built using Linux's `ptr
 
 ## 🎯 Overview
 
-Project Watchtower is an educational and practical implementation of a userspace EDR system. It demonstrates how security monitoring tools can intercept and analyze process behavior without kernel modifications.
+Project Overwatch is an educational and practical implementation of a userspace EDR system. It demonstrates how security monitoring tools can intercept and analyze process behavior using `ptrace`, without kernel modifications.
 
 ### Why Userspace?
 
 - **Safe**: No kernel modifications that could crash the system
 - **Portable**: Works on any Linux system with ptrace support
 - **Educational**: Clear, well-documented implementation
-- **Practical**: Real-world detection capabilities
+- **Practical**: Real-world detection capabilities for single-process monitoring
 
 ---
 
@@ -43,7 +44,7 @@ Project Watchtower is an educational and practical implementation of a userspace
 
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
-│                         PROJECT WATCHTOWER                          │
+│                         PROJECT OVERWATCH                           │
 ├─────────────────────────────────────────────────────────────────────┤
 │                                                                     │
 │   ┌─────────────┐         ┌─────────────┐         ┌─────────────┐  │
@@ -72,7 +73,7 @@ Project Watchtower is an educational and practical implementation of a userspace
 
 ### The Master/Slave Model
 
-- **Tracer (Parent)**: The Watchtower process that monitors and makes decisions
+- **Tracer (Parent)**: The Overwatch process that monitors and makes decisions
 - **Tracee (Child)**: The target process being monitored
 - **Kernel**: The broker that pauses the child and signals the parent
 
@@ -109,18 +110,18 @@ Project Watchtower is an educational and practical implementation of a userspace
 
 ```bash
 # Clone and build
-git clone https://github.com/yourusername/Overwatch-OS-EDR.git
+git clone https://github.com/overclocked-2124/Overwatch-OS-EDR.git
 cd Overwatch-OS-EDR
 make
 
 # Monitor a command (passive mode)
-./bin/watchtower -- ls -la
+./bin/overwatch -- ls -la
 
 # Monitor with enforcement (kills threats)
-./bin/watchtower -e -- ./suspicious_program
+./bin/overwatch -e -- ./suspicious_program
 
 # Debug mode (verbose output)
-./bin/watchtower -d -- cat /etc/passwd
+./bin/overwatch -d -- cat /etc/passwd
 ```
 
 ---
@@ -156,7 +157,7 @@ sudo make install
 
 ```
 bin/
-├── watchtower          # Main EDR executable
+├── overwatch           # Main EDR executable
 ├── test_file_access    # File access test
 ├── test_network        # Network syscall test
 └── test_malicious      # Simulated malware test
@@ -169,7 +170,7 @@ bin/
 ### Basic Syntax
 
 ```bash
-./bin/watchtower [OPTIONS] -- PROGRAM [ARGS...]
+./bin/overwatch [OPTIONS] -- PROGRAM [ARGS...]
 ```
 
 ### Options
@@ -187,41 +188,44 @@ bin/
 
 ```bash
 # Monitor a simple command
-./bin/watchtower -- ls -la /tmp
+./bin/overwatch -- ls -la /tmp
 
 # Monitor with full debug output
-./bin/watchtower -d -- cat /etc/passwd
+./bin/overwatch -d -- cat /etc/passwd
 
 # Enforce security policies (will kill threats)
-./bin/watchtower -e -- ./untrusted_script.sh
+./bin/overwatch -e -- ./untrusted_script.sh
 
 # Quiet mode (only alerts)
-./bin/watchtower -q -- ./background_process
+./bin/overwatch -q -- ./background_process
 ```
 
 ### Sample Output
 
 ```
-╔══════════════════════════════════════════════════════════════════╗
-║   ██╗    ██╗ █████╗ ████████╗ ██████╗██╗  ██╗████████╗ ██████╗   ║
-║   ██║    ██║██╔══██╗╚══██╔══╝██╔════╝██║  ██║╚══██╔══╝██╔═══██╗  ║
-║   ██║ █╗ ██║███████║   ██║   ██║     ███████║   ██║   ██║   ██║  ║
-║   ██║███╗██║██╔══██║   ██║   ██║     ██╔══██║   ██║   ██║   ██║  ║
-║   ╚███╔███╔╝██║  ██║   ██║   ╚██████╗██║  ██║   ██║   ╚██████╔╝  ║
-║    ╚══╝╚══╝ ╚═╝  ╚═╝   ╚═╝    ╚═════╝╚═╝  ╚═╝   ╚═╝    ╚═════╝   ║
-║                                                                   ║
-║              PROJECT WATCHTOWER - Linux EDR v1.0.0               ║
-╚══════════════════════════════════════════════════════════════════╝
+╔════════════════════════════════════════════════════════════════════════════════╗
+║                                                                                ║
+║   ██████╗ ██╗   ██╗███████╗██████╗ ██╗    ██╗ █████╗ ████████╗ ██████╗██╗  ██╗ ║
+║  ██╔═══██╗██║   ██║██╔════╝██╔══██╗██║    ██║██╔══██╗╚══██╔══╝██╔════╝██║  ██║ ║
+║  ██║   ██║██║   ██║█████╗  ██████╔╝██║ █╗ ██║███████║   ██║   ██║     ███████║ ║
+║  ██║   ██║╚██╗ ██╔╝██╔══╝  ██╔══██╗██║███╗██║██╔══██║   ██║   ██║     ██╔══██║ ║
+║  ╚██████╔╝ ╚████╔╝ ███████╗██║  ██║╚███╔███╔╝██║  ██║   ██║   ╚██████╗██║  ██║ ║
+║   ╚═════╝   ╚═══╝  ╚══════╝╚═╝  ╚═╝ ╚══╝╚══╝ ╚═╝  ╚═╝   ╚═╝    ╚═════╝╚═╝  ╚═╝ ║
+║                                                                                ║
+║                 PROJECT OVERWATCH      v1.0.0                                  ║
+║             Linux Userspace EDR  •  Syscall Tracer                             ║
+║                                                                                ║
+╚════════════════════════════════════════════════════════════════════════════════╝
 
-[12:34:56] [INFO ] Project Watchtower EDR starting...
-[12:34:56] [INFO ] Target program: ls
-[12:34:56] [INFO ] === PHASE 1: Process Instrumentation ===
-[12:34:56] [INFO ] Child process created with PID 12345
-[12:34:56] [INFO ] === ENTERING INTERCEPTION LOOP ===
+[09:28:38] [INFO ] Project Overwatch EDR starting...
+[09:28:38] [INFO ] Target program: ls
+[09:28:38] [INFO ] === PHASE 1: Process Instrumentation ===
+[09:28:38] [INFO ] Child process created with PID 12345
+[09:28:38] [INFO ] === ENTERING INTERCEPTION LOOP ===
 
-[12:34:56] [INFO ] [FILE] openat (syscall 257)
-[12:34:56] [INFO ] [FILE] read (syscall 0)
-[12:34:56] [INFO ] [SYSTEM] write (syscall 1)
+[09:28:38] [INFO ] [FILE] openat (syscall 257)
+[09:28:38] [INFO ] [FILE] read (syscall 0)
+[09:28:38] [INFO ] [SYSTEM] write (syscall 1)
 ...
 
 ═══════════════════════════════════════════════════════════
@@ -254,6 +258,7 @@ bin/
 | `sudoers_access` | Access to sudoers | HIGH | ALERT |
 | `log_deletion` | Deleting system logs | HIGH | KILL |
 | `proc_mem_access` | Direct memory access | CRITICAL | KILL |
+| `cron_modification` | Cron job modification | MEDIUM | ALERT |
 
 ### Suspicious Patterns Monitored
 
@@ -263,18 +268,35 @@ bin/
 - `*/.ssh/id_*`
 - `*/authorized_keys`
 - `/proc/*/mem`
+- `/etc/cron*`
 
 **Suspicious Executables:**
 - `/tmp/*`
 - `/dev/shm/*`
 - `*/netcat`, `*/nc`, `*/ncat`
-- `*backdoor*`, `*reverse*shell*`
 
 **Malicious Ports:**
 - 4444 (Metasploit default)
 - 5555, 6666 (Common reverse shells)
 - 31337 (Elite/Back Orifice)
 - 12345 (NetBus)
+- 8080 (Alternative HTTP)
+
+---
+
+## ⚠️ Known Limitations
+
+This is an educational prototype, not production-ready. Key gaps:
+
+- **No Descendant Tracing**: Does not follow child processes spawned via `fork`/`clone`/`vfork`. Malware can evade by forking.
+- **Blocking Not Implemented**: `ACTION_BLOCK` is a stub; syscalls are not prevented (RAX not modified).
+- **Single-PID Focus**: Only traces the initial process; multi-process apps are partially monitored.
+- **Static Rules**: No runtime configuration; limited to path/port patterns.
+- **Platform-Specific**: x86_64 Linux only; hardcoded syscall numbers and word sizes.
+- **Performance**: Word-by-word memory reads are slow for large data.
+- **Detectability**: Traced processes can detect ptrace attachment.
+
+For real EDR, consider kernel-based tools like eBPF or seccomp.
 
 ---
 
@@ -285,7 +307,7 @@ bin/
 When we attach using ptrace, the kernel becomes a gatekeeper:
 
 ```
-Child Process                    Kernel                      Parent (Watchtower)
+Child Process                    Kernel                      Parent (Overwatch)
      │                             │                              │
      │ open("/etc/shadow")         │                              │
      │────────────────────────────►│                              │
@@ -379,10 +401,12 @@ Overwatch-OS-EDR/
 │   ├── enforcer.c        # Phase 4: Detection and enforcement
 │   └── utils.c           # Logging, utilities
 ├── tests/
-│   ├── test_file_access.c    # File syscall tests
+│   ├── test_file_access.c    # File access test
 │   ├── test_network.c        # Network syscall tests
 │   └── test_malicious.c      # Simulated malware behavior
+├── bin/                  # Build output (generated)
 ├── Makefile              # Build system
+├── PROJECT_DOCUMENTATION.md  # Detailed technical docs
 └── README.md             # This file
 ```
 
@@ -400,16 +424,16 @@ make test-samples
 make test
 
 # Test individual components
-./bin/watchtower -- ./bin/test_file_access
-./bin/watchtower -- ./bin/test_network
-./bin/watchtower -e -- ./bin/test_malicious  # Will be killed!
+./bin/overwatch -- ./bin/test_file_access
+./bin/overwatch -- ./bin/test_network
+./bin/overwatch -e -- ./bin/test_malicious  # Will alert/kill!
 ```
 
 ### Test Scenarios
 
 1. **File Access Test**: Monitors normal file operations
 2. **Network Test**: Tracks socket creation and connections
-3. **Malicious Test**: Simulates suspicious behavior (shadow access, SSH keys)
+3. **Malicious Test**: Simulates suspicious behavior (shadow access, SSH keys, cron)
 
 ---
 
@@ -417,7 +441,7 @@ make test
 
 Contributions are welcome! Areas for improvement:
 
-- [ ] Add more detection rules
+- [ ] Add descendant tracing (PTRACE_O_TRACEFORK/CLONE/VFORK)
 - [ ] Implement syscall blocking (modify RAX to -EPERM)
 - [ ] Add JSON logging output
 - [ ] Support for multi-threaded processes
@@ -446,4 +470,4 @@ This tool is for educational and authorized security testing purposes only. Alwa
 
 ---
 
-**Project Watchtower** - *Watching over your processes, one syscall at a time.* 🗼
+**Project Overwatch** - *Watching over your processes, one syscall at a time.* 🛡️
